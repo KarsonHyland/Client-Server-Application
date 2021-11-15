@@ -7,6 +7,7 @@ The server will:
   * connect with multiple clients at oncce
   * accept strings for basic math
   * respond in order of requests and close when the request is done and log it.
+
 The clients will:
   * give the name during the intial attachment to the serve and then wait until it gets a successful acknowledgment about connection.
   * send basic math string calculations at random times to the server
