@@ -1,6 +1,7 @@
 # Client-Server-Application
 The application consists of a centralized Math server and two or more clients. The server will provide basic math calculation services to the client(s). 
 There will be 1 server with at least 2 clients that can connect to it.
+
 The server will:
   * Keep track of all users and how long they are there
   * log client details
