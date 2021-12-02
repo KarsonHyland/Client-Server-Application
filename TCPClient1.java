@@ -3,8 +3,7 @@ import java.net.*;
 
 class TCPClient1 {
 
-    public static void main(String[] args) {
-        String sentence;
+    public static void main(String[] args) throws IOException {
         String modifiedSentence;
         String userEqaution;
 
@@ -16,30 +15,18 @@ class TCPClient1 {
 
         BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        sentence = inFromUser.readLine();
-
-        outToServer.writeBytes(sentence + '\n');
-
-        modifiedSentence = inFromServer.readLine();
-
-        System.out.println("FROM SERVER: " + modifiedSentence);
-
-        if (modifiedSentence.equals("OK")) {
-            System.out.println(
-                    "The client has successfully connected to the server! \n please send equations in the following format:\nnumber - number\nnumber + number\nnumber / number\nnumber * number");
-        } else {
-            System.out.println("connection to the server failed");
-            return;
-        }
-
         do {
-            System.out.println("Enter the equation you want to send to the server:");
+            System.out.println(
+                    "Enter the equation you want to send to the server or type Close Client to close the client:");
             userEqaution = inFromUser.readLine();
-            System.out.println("sending your equation to the server");
+            System.out.println("sending your request to the server");
             outToServer.writeBytes(userEqaution + '\n');
             modifiedSentence = inFromServer.readLine();
-            System.out.println("The server said that " + userEqaution + " = " + modifiedSentence);
-        } while (!modifiedSentence.equals("exit"));
+            if (modifiedSentence.equals("close"))
+                System.out.println("Exiting the client");
+            else
+                System.out.println("The server said that " + userEqaution + " = " + modifiedSentence);
+        } while (!modifiedSentence.equals("close"));
 
         clientSocket.close();
 
