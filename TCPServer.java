@@ -1,16 +1,21 @@
 import java.io.*;
 import java.net.*;
+import java.text.SimpleDateFormat;  
+import java.util.Date; 
+import java.nio.file.Files;
 
 public class TCPServer {
 
     public static void main(String[] args) throws IOException {
 
         ServerSocket welcomeSocket = new ServerSocket(6789);
+        logg myLog = new logg("logg.txt");
 
         // Socket connectionSocket = welcomeSocket.accept();
         while (true) {
 
             Socket connectionSocket = welcomeSocket.accept();
+            mylog.logInfo("New client has been connected")
 
             System.out.println("new client is connected");
 
@@ -27,6 +32,7 @@ public class TCPServer {
 // ClientHandler class
 class ClientHandler implements Runnable {
     private final Socket connectionSocket;
+    logg myLog = new logg("logg.txt");
 
     // Constructor
     public ClientHandler(Socket socket) {
@@ -78,9 +84,11 @@ class ClientHandler implements Runnable {
 
                 if (clientSentence.equals("Close Client")) {
                     answerString = "close";
+                    this.mylog.logInfo("Client has been closed")
                 } else {
                     System.out.println("The equation sent was " + clientSentence + " and the answer is " + answer);
                     answerString = String.valueOf(answer);
+                    this.mylog.logInfo("Client sent " + clientSentence + " which equals " + answer);
                 }
 
                 outToClient.writeBytes(answerString + '\n');
@@ -100,5 +108,20 @@ class ClientHandler implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+}
+
+public class logg {
+    FileWriter writer;
+    filehandler fn;
+
+    public logg(String file_name) throws SecurityException, IOException{
+        this.writer = new FileWriter(file_name); 
+    }
+
+    public logInfo(String info){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+        Date date = new Date();  
+        writer.write(formatter.format(date) + "\n" + info); 
     }
 }
