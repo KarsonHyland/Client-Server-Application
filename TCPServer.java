@@ -1,23 +1,29 @@
 import java.io.*;
 import java.net.*;
 
+// TCPServer Class that extends createfile1 in order to create an object of it and use it's commands
 public class TCPServer extends createfile1 {
 
+    //Main function
     public static void main(String[] args) throws IOException {
 
+        // Initialize a ServerSocket and createfile1 objects
         ServerSocket welcomeSocket = new ServerSocket(6789);
         createfile1 mylog = new createfile1("logg.txt");
 
         // Socket connectionSocket = welcomeSocket.accept();
         while (true) {
 
+            //open connection is created
             Socket connectionSocket = welcomeSocket.accept();
             mylog.logInfo("New client has been connected");
 
+            // Print out statement to present that a connection is successful
             System.out.println("new client is connected");
 
             ClientHandler clientSock = new ClientHandler(connectionSocket);
 
+            //Allows for multiple client connections to be made
             new Thread(clientSock).start();
 
         }
@@ -36,13 +42,17 @@ class ClientHandler implements Runnable {
         this.connectionSocket = socket;
     }
 
+    // The main function for doing basic calculations
     public void run() {
+
+        //Initialize variables
         DataOutputStream outToClient = null;
         BufferedReader in = null;
         int mathOpperation;
         int answer = 0;
         String clientSentence;
         String answerString;
+
         try {
 
             // get the outputstream of client
@@ -51,6 +61,7 @@ class ClientHandler implements Runnable {
             // get the inputstream of client
             in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 
+            // Reads the input string and determines the operation that must take place in the equation
             while ((clientSentence = in.readLine()) != null) {
 
                 System.out.println("The eqaution sent was " + clientSentence);
@@ -79,6 +90,7 @@ class ClientHandler implements Runnable {
                             * Integer.parseInt(clientSentence.substring(mathOpperation + 1));
                 }
 
+                // If "Close Client" string is inputted the connection with the client is closed and no more input is taken
                 if (clientSentence.equals("Close Client")) {
                     answerString = "close";
                     this.myLog.logInfo("Client has been closed");
@@ -93,6 +105,7 @@ class ClientHandler implements Runnable {
                 outToClient.writeBytes(answerString + '\n');
             }
         } catch (IOException e) {
+            //Error handling
             e.printStackTrace();
         } finally {
             try {
