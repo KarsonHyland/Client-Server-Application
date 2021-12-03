@@ -84,9 +84,9 @@ class ClientHandler implements Runnable {
                     answerString = "close";
                     this.myLog.logInfo("Client has been closed");
                 } else {
-                    System.out.println("The equation sent was " + clientSentence + " and the answer is " + answer);
+                    System.out.println("The equation sent was " + clientSentence + " and the answer is " + answer + " ");
                     answerString = String.valueOf(answer);
-                    this.myLog.logInfo("Client sent " + clientSentence + " which equals " + answer);
+                    this.myLog.logInfo("Client sent " + clientSentence + " which equals " + answer + " ");
                 }
 
                 outToClient.writeBytes(answerString + '\n');
