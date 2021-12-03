@@ -1,13 +1,12 @@
 import java.io.*;
 import java.net.*;
-import createfile;
 
-public class TCPServer {
+public class TCPServer extends createfile1 {
 
     public static void main(String[] args) throws IOException {
 
         ServerSocket welcomeSocket = new ServerSocket(6789);
-        createfile mylog = new createfile("logg.txt");
+        createfile1 mylog = new createfile1("logg.txt");
 
         // Socket connectionSocket = welcomeSocket.accept();
         while (true) {
@@ -30,7 +29,7 @@ public class TCPServer {
 // ClientHandler class
 class ClientHandler implements Runnable {
     private final Socket connectionSocket;
-    private createfile myLog = new createfile("logg.txt");
+    private createfile1 myLog = new createfile1("logg.txt");
 
     // Constructor
     public ClientHandler(Socket socket) {
@@ -84,7 +83,9 @@ class ClientHandler implements Runnable {
                     answerString = "close";
                     this.myLog.logInfo("Client has been closed");
                 } else {
-                    System.out.println("The equation sent was " + clientSentence + " and the answer is " + answer + " ");
+                    System.out
+                            .println("The equation sent was " + clientSentence + " and the answer is " + answer
+                                    + " ");
                     answerString = String.valueOf(answer);
                     this.myLog.logInfo("Client sent " + clientSentence + " which equals " + answer + " ");
                 }
