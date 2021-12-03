@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class createfile1 {
+    //creates the stuff needed to write to a log file
     private FileWriter myWriter;
     private File f1;
     private BufferedWriter bw;
@@ -14,6 +15,7 @@ public class createfile1 {
 
     }
 
+    //creates the logg file
     public createfile1(String file_name) {
         try {
             this.f1 = new File(file_name);
@@ -28,8 +30,10 @@ public class createfile1 {
         }
     }
 
+    //write info to the log file
     public void logInfo(String stuff) {
         try {
+            //gets the time and date
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
             this.bw.write(formatter.format(date) + "\n" + stuff);
@@ -40,6 +44,7 @@ public class createfile1 {
         }
     }
 
+    //closes the file writer
     public void closer() {
         try {
             this.bw.close();
