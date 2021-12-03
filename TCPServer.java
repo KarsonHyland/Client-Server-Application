@@ -108,6 +108,7 @@ class ClientHandler implements Runnable {
             //Error handling
             e.printStackTrace();
         } finally {
+            // Clean up code/ Last case error handling
             try {
                 if (outToClient != null) {
                     outToClient.close();
